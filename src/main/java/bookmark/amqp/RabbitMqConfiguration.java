@@ -24,10 +24,10 @@ public class RabbitMqConfiguration {
     @Bean
     public ConnectionFactory connectionFactory()
     {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("10.11.201.63");
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("10.11.201.66");
         connectionFactory.setPort(5672);    
-//        connectionFactory.setUsername("user");
-//        connectionFactory.setPassword("password");
+        connectionFactory.setUsername("guest");
+        connectionFactory.setPassword("guest");
 
         return connectionFactory;
     }

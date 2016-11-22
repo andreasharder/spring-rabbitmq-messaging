@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleAfterCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
@@ -21,7 +20,6 @@ import java.util.Date;
  * @author Developer
  */
 
-@Component
 @RepositoryEventHandler(Bookmark.class)
 public class BookmarkEventHandler {
     
