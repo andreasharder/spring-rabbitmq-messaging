@@ -24,3 +24,14 @@ dist/
 nbdist/
 .nb-gradle/
 /bin/
+
+### NodeJS ###
+
+# Dependency directory
+node_modules
+
+# Logs
+npm-debug.log*
+
+.DS_Store
+
