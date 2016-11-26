@@ -9,4 +9,4 @@ Install Dependencies
 
 Run the nodeJS server app
 
-	npm run server
+	npm run scraper
