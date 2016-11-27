@@ -43,7 +43,7 @@ connection.on('ready', function () {
                 queue.shift();
 
                 getPage(message.url).then(function (data) {
-                    sendMessage(data.summary);
+                    sendMessage({summary: data.summary});
                 }, console.error);
             });
         });
