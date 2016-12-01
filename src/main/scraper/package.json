@@ -11,7 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "amqp": "^0.2.6",
-    "lodash-node": "^2.4.1",
-    "summarizer": "^1.0.0"
+    "metascraper": "^1.0.6"
   }
 }

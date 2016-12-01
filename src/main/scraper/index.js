@@ -1,7 +1,7 @@
 'use strict';
 
 var amqp = require('amqp');
-var getPage = require('summarizer').getPage;
+var Metascraper = require('metascraper');
 
 var connection = amqp.createConnection({url: "amqp://guest:guest@127.0.0.1:5672"});
 
@@ -42,9 +42,10 @@ connection.on('ready', function () {
                 console.log(message);
                 queue.shift();
 
-                getPage(message.url).then(function (data) {
-                    sendMessage({summary: data.summary});
-                }, console.error);
+                Metascraper.scrapeUrl(message.url).then((metadata) => {
+                    sendMessage({summary: metadata.description});
+                    console.log(metadata);  
+                });
             });
         });
     });
