@@ -43,7 +43,10 @@ connection.on('ready', function () {
                 queue.shift();
 
                 Metascraper.scrapeUrl(message.url).then((metadata) => {
-                    sendMessage({summary: metadata.description});
+                    sendMessage({
+                        summary: metadata.description,
+                        url: metadata.url
+                    });
                     console.log(metadata);  
                 });
             });
