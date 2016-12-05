@@ -12,7 +12,10 @@ connection.on('error', function(e) {
 
 function sendMessage(payload) {
     var encoded_payload = JSON.stringify(payload);
-    connection.publish('scraper.queue', encoded_payload);
+    var options = {
+        contentType: "application/json"
+    };
+    connection.publish('scraper.queue', encoded_payload, options);
 }
 
 connection.once('ready', function () {

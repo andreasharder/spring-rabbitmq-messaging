@@ -35,7 +35,7 @@ public class SummaryConsumerConfiguration extends RabbitMqConfiguration {
 	}
 
 	@Bean
-	public Queue scrapingResultQueue() {
+	public Queue scraperQueue() {
 		return new Queue(this.scraperQueue);
 	}
 
