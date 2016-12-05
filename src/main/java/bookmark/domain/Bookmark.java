@@ -20,6 +20,7 @@ public class Bookmark {
 
     private String url;
     private String note;
+    private String summary;
     
     @DateTimeFormat()
     private Date created;
@@ -48,5 +49,13 @@ public class Bookmark {
     public void setCreated(Date created)
     {
         this.created = created;
+    }
+    
+    public String getSummary(){
+        return this.summary;
+    }
+    
+    public void setSummary(String summary){
+        this.summary = summary;
     }
 }
