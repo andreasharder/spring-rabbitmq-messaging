@@ -38,7 +38,7 @@ function BookmarkViewModel() {
 
         // make POST request
         $.ajax("http://localhost:8080/bookmarks", {
-            data: '{"url": "' + newUrl + ' ", "note": "' + newNote + '"}',
+            data: '{"url": "' + newUrl + '", "note": "' + newNote + '"}',
             type: "post",
             contentType: "application/json",
             success: function (allData) {
@@ -72,7 +72,7 @@ function BookmarkViewModel() {
 
         // make PUT request (or send PATCH then we don't need to include the created date)
         $.ajax(bookmark.selfHref, {
-            data: '{"url": "' + newUrl + ' ", "note": "' + newNote + '", "created": "' + bookmark.created +'"}',
+            data: '{"url": "' + newUrl + '", "note": "' + newNote + '", "created": "' + bookmark.created +'"}',
             type: "patch",
             contentType: "application/json",
             success: function (allData) {
