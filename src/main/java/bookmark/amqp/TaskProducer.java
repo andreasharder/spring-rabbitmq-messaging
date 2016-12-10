@@ -5,7 +5,6 @@
  */
 package bookmark.amqp;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,14 +14,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TaskProducer {
-    
-    @Autowired
+
     private TaskProducerConfiguration taskProducerConfiguration;
 
+    public TaskProducer(TaskProducerConfiguration taskProducerConfiguration) {
+        this.taskProducerConfiguration = taskProducerConfiguration;
+    }
+
     public void sendNewTask(TaskMessage taskMessage)
-    {   
+    {
         System.out.println("Sending new task...");
-	taskProducerConfiguration.rabbitTemplate()
-				.convertAndSend(taskProducerConfiguration.tasksQueue, taskMessage);
+        taskProducerConfiguration.rabbitTemplate().convertAndSend(taskMessage);
     }
 }

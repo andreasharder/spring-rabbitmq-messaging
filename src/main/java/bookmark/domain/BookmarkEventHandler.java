@@ -37,6 +37,7 @@ public class BookmarkEventHandler {
     {
         final TaskMessage taskMessage = new TaskMessage();
         taskMessage.setUrl(bookmark.getUrl());
+
         taskProducer.sendNewTask(taskMessage);
     }
 }

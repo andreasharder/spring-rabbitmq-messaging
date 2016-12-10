@@ -51,7 +51,7 @@ connection.once('ready', function () {
     }, function (queue) {
 
         console.log('Queue ' + queue.name + ' is open');
-        queue.bind('#');
+        queue.bind('tasks.exchange', '');
 
         queue.once('queueBindOk', function () {
             queue.subscribe({
@@ -60,7 +60,7 @@ connection.once('ready', function () {
 
                 console.log(message);
                 queue.shift();
-                
+
                 scrapeWeb(message, exc);
             });
         });
