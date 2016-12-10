@@ -1,7 +1,7 @@
 'use strict';
 
 var amqp = require('amqp');
-var Metascraper = require('metascraper');
+var metascraper = require('metascraper');
 
 var connection = amqp.createConnection({url: "amqp://guest:guest@127.0.0.1:5672"});
 
@@ -10,25 +10,41 @@ connection.on('error', function(e) {
     console.log("Error from amqp: ", e);
 });
 
-function sendMessage(payload) {
+function sendMessage(exchange, payload) {
     var encoded_payload = JSON.stringify(payload);
-    var options = {
+
+    exchange.publish('', encoded_payload, {
         contentType: "application/json"
-    };
-    connection.publish('scraper.queue', encoded_payload, options);
+    }, function (hasErrorOccured, err) {
+
+        if (hasErrorOccured) {
+          return console.log(err.message);
+        }
+        console.log('Message send to exchange!');
+    });
 }
 
-connection.once('ready', function () {
-    connection.queue('scraper.queue', {
-        durable: true,
-        autoDelete: false
-    }, function (queue) {
-        console.log('Queue ' + queue.name + ' is open');
+function scrapeWeb(message, exchange) {
+    metascraper.scrapeUrl(message.url).then((metadata) => {
+        sendMessage(exchange, {
+            summary: metadata.description,
+            url: metadata.url
+        });
+        console.log(metadata);
     });
-});
+}
 
 // Wait for connection to become established.
-connection.on('ready', function () {
+connection.once('ready', function () {
+
+    var exc = connection.exchange('scraper.exchange', {
+        type: 'fanout',
+        durable: true,
+        autoDelete: false
+    }, function (exchange) {
+        console.log('Exchange ' + exchange.name + ' is open');
+    });
+
     connection.queue('tasks.queue', {
         durable: true,
         autoDelete: false
@@ -44,14 +60,8 @@ connection.on('ready', function () {
 
                 console.log(message);
                 queue.shift();
-
-                Metascraper.scrapeUrl(message.url).then((metadata) => {
-                    sendMessage({
-                        summary: metadata.description,
-                        url: metadata.url
-                    });
-                    console.log(metadata);  
-                });
+                
+                scrapeWeb(message, exc);
             });
         });
     });
